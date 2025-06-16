@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.env
+Pipfile
+Pipfile.lock
+migrations/
+*.db
