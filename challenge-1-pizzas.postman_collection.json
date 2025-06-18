@@ -1,61 +1,156 @@
 {
-    "info": {
-      "name": "Pizza Restaurant API",
-      "_postman_id": "12345678-9012-3456-7890-123456789012",
-      "description": "Collection to test the Pizza Restaurant API",
-      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  "info": {
+    "_postman_id": "c1f2e3d4-a5b6-7c8d-9e0f-1a2b3c4d5e6f",
+    "name": "Pizza Restaurant API Challenge",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for testing the Flask Pizza Restaurant API."
+  },
+  "item": [
+    {
+      "name": "Restaurants",
+      "item": [
+        {
+          "name": "Get All Restaurants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5000/restaurants",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5000",
+              "path": [
+                "restaurants"
+              ]
+            },
+            "description": "Returns a list of all restaurants."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Restaurant by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5000/restaurants/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5000",
+              "path": [
+                "restaurants",
+                "1"
+              ]
+            },
+            "description": "Returns details of a single restaurant, including its pizzas."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Restaurant by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5000/restaurants/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5000",
+              "path": [
+                "restaurants",
+                "1"
+              ]
+            },
+            "description": "Deletes a restaurant and all related RestaurantPizzas."
+          },
+          "response": []
+        }
+      ]
     },
-    "item": [
-      {
-        "name": "Get All Restaurants",
-        "request": {
-          "method": "GET",
-          "url": "{{base_url}}/restaurants"
+    {
+      "name": "Pizzas",
+      "item": [
+        {
+          "name": "Get All Pizzas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5000/pizzas",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5000",
+              "path": [
+                "pizzas"
+              ]
+            },
+            "description": "Returns a list of all pizzas."
+          },
+          "response": []
         }
-      },
-      {
-        "name": "Get Restaurant by ID",
-        "request": {
-          "method": "GET",
-          "url": "{{base_url}}/restaurants/1"
+      ]
+    },
+    {
+      "name": "Restaurant Pizzas",
+      "item": [
+        {
+          "name": "Create New RestaurantPizza",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 15,\n  \"pizza_id\": 1,\n  \"restaurant_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5000/restaurant_pizzas",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "5000",
+              "path": [
+                "restaurant_pizzas"
+              ]
+            },
+            "description": "Creates a new RestaurantPizza entry."
+          },
+          "response": []
         }
-      },
-      {
-        "name": "Delete Restaurant",
-        "request": {
-          "method": "DELETE",
-          "url": "{{base_url}}/restaurants/1"
-        }
-      },
-      {
-        "name": "Get All Pizzas",
-        "request": {
-          "method": "GET",
-          "url": "{{base_url}}/pizzas"
-        }
-      },
-      {
-        "name": "Create RestaurantPizza",
-        "request": {
-          "method": "POST",
-          "url": "{{base_url}}/restaurant_pizzas",
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
-          ],
-          "body": {
-            "mode": "raw",
-            "raw": "{\"price\": 5, \"pizza_id\": 1, \"restaurant_id\": 1}"
-          }
-        }
-      }
-    ],
-    "variable": [
-      {
-        "key": "base_url",
-        "value": "http://localhost:5000"
-      }
-    ]
-  }
+      ]
+    }
+  ]
+}

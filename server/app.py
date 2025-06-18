@@ -15,6 +15,7 @@ app.register_blueprint(restaurant_pizza_bp)
 def home():
     return "<h1>Welcome to the Pizza Restaurant API!</h1>"
 
+
 @app.shell_context_processor
 def make_shell_context():
     return dict(app=app, db=db, Restaurant=Restaurant, Pizza=Pizza, RestaurantPizza=RestaurantPizza)

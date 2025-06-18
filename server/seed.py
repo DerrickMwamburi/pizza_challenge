@@ -31,14 +31,14 @@ def seed_database():
         print("Pizzas seeded.")
 
         print("Seeding RestaurantPizzas...")
-        rp1 = RestaurantPizza(restaurant=r1, pizza=p1, price=1200)
-        rp2 = RestaurantPizza(restaurant=r1, pizza=p2, price=1400)
+        rp1 = RestaurantPizza(restaurant=r1, pizza=p1, price=15)
+        rp2 = RestaurantPizza(restaurant=r1, pizza=p2, price=18)
 
-        rp3 = RestaurantPizza(restaurant=r2, pizza=p3, price=1000)
-        rp4 = RestaurantPizza(restaurant=r2, pizza=p4, price=1500)
+        rp3 = RestaurantPizza(restaurant=r2, pizza=p3, price=14)
+        rp4 = RestaurantPizza(restaurant=r2, pizza=p4, price=15)
 
-        rp5 = RestaurantPizza(restaurant=r3, pizza=p1, price=1300)
-        rp6 = RestaurantPizza(restaurant=r3, pizza=p3, price=1100)
+        rp5 = RestaurantPizza(restaurant=r3, pizza=p1, price=13)
+        rp6 = RestaurantPizza(restaurant=r3, pizza=p3, price=11)
 
         db.session.add_all([rp1, rp2, rp3, rp4, rp5, rp6])
         db.session.commit()
