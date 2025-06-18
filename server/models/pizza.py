@@ -1,5 +1,5 @@
 from server.config import db
-from sqlalchemy.orm import relationship # Import relationship for defining relationships
+from sqlalchemy.orm import relationship
 
 
 class Pizza(db.Model):
@@ -8,17 +8,13 @@ class Pizza(db.Model):
     name = db.Column(db.String)
     ingredients = db.Column(db.String)
 
-    # Define relationship with RestaurantPizza
     restaurant_pizzas = relationship(
         'RestaurantPizza',
         back_populates='pizza',
-        lazy=True # Load related objects only when accessed
+        lazy=True
     )
 
     def to_dict(self):
-        """
-        Serializes the Pizza object.
-        """
         return {
             "id": self.id,
             "name": self.name,
@@ -26,9 +22,6 @@ class Pizza(db.Model):
         }
 
     def serialize(self):
-        """
-        Serializes the Pizza object (same as to_dict for this model).
-        """
         return {
             "id": self.id,
             "name": self.name,

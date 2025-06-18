@@ -1,9 +1,8 @@
 from flask import Blueprint, jsonify, make_response
-from flask_restful import Resource # Import Resource from flask_restful
+from flask_restful import Resource
 from server.config import db, api
-from server.models.pizza import Pizza # Import the Pizza model
+from server.models.pizza import Pizza
 
-# Create a Blueprint for pizza routes
 pizza_bp = Blueprint('pizza_bp', __name__)
 
 class PizzaList(Resource):
@@ -16,5 +15,4 @@ class PizzaList(Resource):
         serialized_pizzas = [pizza.serialize() for pizza in pizzas]
         return make_response(jsonify(serialized_pizzas), 200)
 
-# Add the resource to the API
 api.add_resource(PizzaList, '/pizzas')
