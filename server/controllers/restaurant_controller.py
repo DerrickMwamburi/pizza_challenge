@@ -1,26 +1,48 @@
-from flask import Blueprint, jsonify
-from server.app import db
-from server.models.restaurant import Restaurant
+from flask import Blueprint, jsonify, make_response
+from flask_restful import Resource # Import Resource from flask_restful for API endpoints
+from server.config import db, api
+from server.models.restaurant import Restaurant # Import the Restaurant model
 
-restaurant_bp = Blueprint('restaurant', __name__)
+# Create a Blueprint for restaurant routes
+restaurant_bp = Blueprint('restaurant_bp', __name__)
 
-@restaurant_bp.route('/restaurants', methods=['GET'])
-def get_restaurants():
-    restaurants = Restaurant.query.all()
-    return jsonify([restaurant.to_dict() for restaurant in restaurants])
+class RestaurantList(Resource):
+    def get(self):
+        """
+        Handles GET request for /restaurants.
+        Returns a list of all restaurants.
+        """
+        restaurants = Restaurant.query.all()
+        # Serialize each restaurant using the serialize method which does not include pizzas
+        serialized_restaurants = [restaurant.serialize() for restaurant in restaurants]
+        return make_response(jsonify(serialized_restaurants), 200)
 
-@restaurant_bp.route('/restaurants/<int:id>', methods=['GET'])
-def get_restaurant(id):
-    restaurant = Restaurant.query.get(id)
-    if not restaurant:
-        return jsonify({'error': 'Restaurant not found'}), 404
-    return jsonify(restaurant.to_dict())
+class RestaurantById(Resource):
+    def get(self, id):
+        """
+        Handles GET request for /restaurants/<int:id>.
+        Returns details of a single restaurant and its pizzas.
+        """
+        restaurant = Restaurant.query.get(id)
+        if not restaurant:
+            return make_response(jsonify({"error": "Restaurant not found"}), 404)
+        # Serialize the restaurant using the to_dict method which includes pizzas
+        return make_response(jsonify(restaurant.to_dict()), 200)
 
-@restaurant_bp.route('/restaurants/<int:id>', methods=['DELETE'])
-def delete_restaurant(id):
-    restaurant = Restaurant.query.get(id)
-    if not restaurant:
-        return jsonify({'error': 'Restaurant not found'}), 404
-    db.session.delete(restaurant)
-    db.session.commit()
-    return '', 204
+    def delete(self, id):
+        """
+        Handles DELETE request for /restaurants/<int:id>.
+        Deletes a restaurant and all related RestaurantPizzas due to cascading delete.
+        """
+        restaurant = Restaurant.query.get(id)
+        if not restaurant:
+            return make_response(jsonify({"error": "Restaurant not found"}), 404)
+
+        db.session.delete(restaurant)
+        db.session.commit()
+        # Return 204 No Content on successful deletion
+        return make_response("", 204) # Empty response body
+
+# Add the resources to the API
+api.add_resource(RestaurantList, '/restaurants')
+api.add_resource(RestaurantById, '/restaurants/<int:id>')
